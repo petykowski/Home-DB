@@ -1,0 +1,67 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "Put Reading",
+    "description": "Schema used to POST a Temperature/Humidity Reading",
+    "default": {},
+    "examples": [
+        {
+            "value": 25.2,
+            "unit": "C",
+            "type": "T",
+            "deviceId": "88:2X:X2:77:22:X5"
+        }
+    ],
+    "required": [
+        "value",
+        "unit",
+        "type",
+        "deviceId"
+    ],
+    "properties": {
+        "value": {
+            "$id": "#/properties/value",
+            "type": "number",
+            "title": "Reading Value",
+            "description": "Represents the temperature or humidity value.",
+            "default": 0.0,
+            "examples": [
+                86.2
+            ]
+        },
+        "unit": {
+            "$id": "#/properties/unit",
+            "type": "string",
+            "title": "Reading Unit",
+            "description": "The unit of measure for the provided reading value.",
+            "default": "",
+            "examples": [
+                "C",
+                "R"
+            ]
+        },
+        "type": {
+            "$id": "#/properties/type",
+            "type": "string",
+            "title": "Reading Type",
+            "description": "The type of reading for the provided reading value.",
+            "default": "",
+            "examples": [
+                "T",
+                "H"
+            ]
+        },
+        "deviceId": {
+            "$id": "#/properties/deviceId",
+            "type": "string",
+            "title": "Device ID",
+            "description": "The MAC address of the device which captured the reading.",
+            "default": "",
+            "examples": [
+                "88:2X:X2:77:22:X5"
+            ]
+        }
+    },
+    "additionalProperties": true
+}
