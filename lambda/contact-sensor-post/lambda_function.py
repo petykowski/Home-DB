@@ -15,48 +15,18 @@ logger.setLevel(logging.INFO)
 
 try:
   connnection = pymysql.connect(rds_hostname, user=name, passwd=password, db=db_name, connect_timeout=5)
+  logger.info("SUCCESS: Connection to RDS MySQL instance succeeded")
 except pymysql.MySQLError as e:
   logger.error("ERROR: Unexpected error: Could not connect to MySQL instance.")
   logger.error(e)
   sys.exit()
 
-logger.info("SUCCESS: Connection to RDS MySQL instance succeeded")
-
 def lambda_handler(event, context):
-
-  # Placeholder for GET Call
-  if event['type'] == 'temperature':
-
-    with connnection.cursor() as cursor:
-      sql = 'SELECT VALUE FROM READING WHERE TYPE_CDE = \'T\' ORDER BY READING_DT DESC LIMIT 1'
-      cursor.execute(sql)
-      result = cursor.fetchone()
-
-      return {
-        'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!'),
-        'value': result[0]
-      }
-
-  # Placeholder for GET Call
-  if event['type'] == 'humidity':
-
-    with connnection.cursor() as cursor:
-      sql = 'SELECT VALUE FROM READING WHERE TYPE_CDE = \'H\' ORDER BY READING_DT DESC LIMIT 1'
-      cursor.execute(sql)
-      result = cursor.fetchone()
-
-      return {
-        'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!'),
-        'value': result[0]
-      }
-
   # Get Values
-  reading_type = event['type']
-  reading_value = event['value']
-  reading_unit = event['unit']
-  device_id = event['deviceId']
+  reading_type = 'C'
+  reading_value = 1
+  reading_unit = 'S'
+  device_id = '24:0a:c4:58:51:b0'
 
   with connnection.cursor() as cursor:
 
@@ -69,3 +39,5 @@ def lambda_handler(event, context):
     'statusCode': 200,
     'body': json.dumps('Reading written successfully')
   }
+  
+  connnection.close()
